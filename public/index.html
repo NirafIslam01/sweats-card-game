@@ -8,11 +8,11 @@
   <style>
     *{box-sizing:border-box;margin:0;padding:0;}
     body{background:#1a1a2e;font-family:Georgia,serif;color:#fff;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;}
-
+ 
     /* ── Screens ── */
     .screen{display:none;width:100%;height:100vh;align-items:center;justify-content:center;}
     .screen.active{display:flex;}
-
+ 
     /* ── Landing ── */
     .card-panel{background:#0f1525;border:1px solid rgba(240,192,64,.25);border-radius:14px;padding:44px 52px;width:420px;display:flex;flex-direction:column;gap:18px;}
     .card-panel h1{font-size:2.2rem;letter-spacing:6px;color:#f0c040;text-align:center;text-transform:uppercase;}
@@ -22,13 +22,13 @@
     input:focus,select:focus{border-color:rgba(240,192,64,.5);}
     .divider{display:flex;align-items:center;gap:12px;color:#333;font-size:.72rem;}
     .divider::before,.divider::after{content:'';flex:1;height:1px;background:#2a2a3e;}
-    .btn{padding:12px;border:none;border-radius:6px;font-size:.88rem;font-weight:bold;letter-spacing:2px;text-transform:uppercase;cursor:pointer;font-family:Georgia,serif;transition:transform .1s,box-shadow .1s;width:100%;}
+    .btn{padding:12px;border:none;border-radius:6px;font-size:.88rem;font-weight:bold;letter-spacing:2px;text-transform:uppercase;cursor:pointer;font-family:Georgia,serif;transition:transform .1s,box-shadow .1s;width:100%;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
     .btn:hover{transform:translateY(-2px);}
     .btn-gold{background:linear-gradient(135deg,#f0c040,#e0a020);color:#1a1a2e;box-shadow:0 4px 16px rgba(240,192,64,.3);}
     .btn-dark{background:#1e1e30;color:#aaa;border:1px solid #333;}
     .btn-dark:hover{color:#fff;}
     .err-msg{font-size:.75rem;color:#e74c3c;text-align:center;min-height:1em;}
-
+ 
     /* ── Lobby ── */
     #lobby-screen{flex-direction:column;gap:0;}
     .lobby-box{background:#0f1525;border:1px solid rgba(240,192,64,.2);border-radius:14px;padding:36px 44px;width:460px;display:flex;flex-direction:column;gap:16px;}
@@ -42,13 +42,13 @@
     .player-row .p-badge{font-size:.6rem;padding:1px 6px;border-radius:10px;background:rgba(231,76,60,.2);color:#e74c3c;border:1px solid rgba(231,76,60,.3);letter-spacing:1px;}
     .player-row .p-badge.you{background:rgba(240,192,64,.2);color:#f0c040;border-color:rgba(240,192,64,.3);}
     .waiting-msg{font-size:.72rem;color:#555;text-align:center;letter-spacing:1px;}
-
+ 
     /* ── Header ── */
     #game-header{position:fixed;top:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;padding:11px 26px;background:rgba(10,10,20,.92);backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,.06);z-index:100;}
     .logo{font-size:1.2rem;font-weight:bold;letter-spacing:5px;color:#f0c040;text-transform:uppercase;}
     .hdr-info{display:flex;gap:22px;font-size:.72rem;color:#555;}
     .hdr-info span strong{color:#ccc;}
-
+ 
     /* ── Table ── */
     #game-screen{flex-direction:column;}
     .table-wrap{position:relative;width:800px;height:490px;margin-top:56px;}
@@ -57,7 +57,7 @@
     .pot-lbl{font-size:.58rem;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.3);}
     .pot-amt{font-size:2rem;font-weight:bold;color:#f0c040;text-shadow:0 0 20px rgba(240,192,64,.4);}
     .phase-lbl{font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.25);margin-top:5px;}
-
+ 
     /* ── Seats ── */
     .seat{position:absolute;display:flex;flex-direction:column;align-items:center;gap:6px;}
     .seat-0{bottom:-100px;left:50%;transform:translateX(-50%);}
@@ -66,7 +66,7 @@
     .seat-3{top:-45px;right:-120px;flex-direction:column-reverse;}
     .seat-4{top:50%;left:-135px;transform:translateY(-50%);}
     .seat-5{top:50%;right:-135px;transform:translateY(-50%);}
-
+ 
     .p-info{display:flex;flex-direction:column;align-items:center;gap:3px;}
     .p-name-tag{font-size:.72rem;letter-spacing:1px;background:rgba(0,0,0,.5);padding:2px 12px;border-radius:20px;color:#ccc;white-space:nowrap;border:1px solid transparent;transition:all .3s;}
     .p-money{font-size:.68rem;color:#f0c040;}
@@ -79,14 +79,14 @@
     .b-out{background:rgba(100,100,100,.15);color:#555;border:1px solid rgba(100,100,100,.2);}
     .b-winner{background:rgba(46,204,113,.3);color:#2ecc71;border:1px solid rgba(46,204,113,.5);}
     .b-hand{background:rgba(155,89,182,.2);color:#a569bd;border:1px solid rgba(155,89,182,.3);}
-
+ 
     .seat.is-active .cards-hand{filter:drop-shadow(0 0 12px rgba(240,192,64,.8));}
     .seat.is-active .p-name-tag{color:#f0c040;background:rgba(240,192,64,.12);border-color:rgba(240,192,64,.35);}
     .seat.is-out{opacity:.2;pointer-events:none;}
     .seat.is-folded .cards-hand{opacity:.35;}
     .seat.is-winner .p-name-tag{color:#2ecc71;background:rgba(46,204,113,.1);border-color:rgba(46,204,113,.35);}
     .seat.is-winner .cards-hand{filter:drop-shadow(0 0 14px rgba(46,204,113,.8));}
-
+ 
     /* ── Cards ── */
     .cards-hand{display:flex;gap:3px;align-items:flex-end;}
     .card{width:33px;height:49px;border-radius:4px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:bold;box-shadow:0 2px 8px rgba(0,0,0,.6);transition:transform .2s;border:1px solid rgba(0,0,0,.3);}
@@ -105,21 +105,50 @@
     .card-is-faceup .c-rank{font-size:.85rem!important;}
     .card-is-faceup .c-suit{font-size:1.2rem!important;}
     .card-is-faceup:hover{transform:translateY(-10px);}
-
+ 
     /* ── Your turn blink ── */
     .your-turn-tag{font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:#f0c040;animation:blink 1.1s ease-in-out infinite;}
     @keyframes blink{0%,100%{opacity:1}50%{opacity:.15}}
-
+ 
     /* ── Action bar ── */
-    #action-bar{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;z-index:50;}
+    #action-bar{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;z-index:200;}
     #action-bar.hidden{display:none;}
     .action-btns{display:flex;gap:14px;}
-    .act-btn{padding:12px 38px;border:none;border-radius:6px;font-size:.85rem;font-weight:bold;letter-spacing:2px;text-transform:uppercase;cursor:pointer;font-family:Georgia,serif;transition:transform .1s,box-shadow .1s;}
+    .act-btn{padding:12px 38px;border:none;border-radius:6px;font-size:.85rem;font-weight:bold;letter-spacing:2px;text-transform:uppercase;cursor:pointer;font-family:Georgia,serif;transition:transform .1s,box-shadow .1s;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
     .act-btn:hover{transform:translateY(-2px);}
     .btn-fold{background:#252525;color:#888;border:1px solid #3a3a3a;}
     .btn-play{background:linear-gradient(135deg,#f0c040,#e0a020);color:#1a1a2e;box-shadow:0 4px 16px rgba(240,192,64,.35);}
-    .fold-warn{font-size:.62rem;color:#e74c3c;letter-spacing:1px;}
-
+    .fold-warn{font-size:.62rem;color:#e74c3c;letter-spacing:1px;text-align:center;}
+ 
+    /* ── Mobile responsive ── */
+    @media (max-width: 860px) {
+      .table-wrap{
+        transform-origin: top center;
+        transform: scale(0.75);
+        margin-top: 10px;
+      }
+      #game-screen{ justify-content: flex-start; padding-top: 56px; }
+      #log-panel{ display: none !important; }
+      #btm-bar{ display: none !important; }
+    }
+    @media (max-width: 620px) {
+      .table-wrap{ transform: scale(0.5); margin-top: -60px; }
+      /* Big tap-friendly action buttons on mobile */
+      #action-bar{ bottom: 16px; width: 92%; left: 4%; transform: none; }
+      .action-btns{ width: 100%; gap: 10px; }
+      .act-btn{ flex: 1; padding: 18px 10px; font-size: 1rem; letter-spacing: 1px; border-radius: 10px; }
+      .fold-warn{ font-size: .7rem; }
+      /* Landing & lobby fit phone */
+      .card-panel{ width: 92vw; padding: 28px 22px; }
+      .lobby-box{ width: 92vw; padding: 24px 20px; }
+      /* Round-over overlay fits phone */
+      .round-box{ padding: 28px 20px; }
+      .round-box h2{ font-size: 1.2rem; }
+    }
+    @media (max-width: 400px) {
+      .table-wrap{ transform: scale(0.42); margin-top: -80px; }
+    }
+ 
     /* ── Game log ── */
     #log-panel{position:fixed;left:18px;top:68px;bottom:18px;width:190px;z-index:50;overflow:hidden;display:flex;flex-direction:column;gap:6px;}
     .log-title{font-size:.58rem;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.2);}
@@ -127,7 +156,7 @@
     .log-entry{font-size:.68rem;color:rgba(255,255,255,.45);line-height:1.4;animation:fadeIn .25s ease;}
     .lg-gold{color:#f0c040;} .lg-green{color:#2ecc71;} .lg-red{color:#e74c3c;} .lg-dim{color:rgba(255,255,255,.25);}
     @keyframes fadeIn{from{opacity:0;transform:translateX(-6px)}to{opacity:1;transform:none}}
-
+ 
     /* ── Round over overlay ── */
     #round-overlay{position:fixed;inset:0;background:rgba(10,10,20,.88);display:none;align-items:center;justify-content:center;z-index:200;}
     #round-overlay.show{display:flex;}
@@ -137,7 +166,7 @@
     .rw-hand{font-size:.78rem;color:#a569bd;letter-spacing:1px;margin-bottom:16px;}
     .rw-info{font-size:.78rem;color:#888;line-height:1.7;margin-bottom:22px;}
     .rw-info strong{color:#ddd;}
-
+ 
     /* ── Game over ── */
     #gameover-overlay{position:fixed;inset:0;background:rgba(10,10,20,.96);display:none;align-items:center;justify-content:center;z-index:250;}
     #gameover-overlay.show{display:flex;}
@@ -145,59 +174,59 @@
     .go-box h1{font-size:3rem;letter-spacing:8px;color:#f0c040;text-transform:uppercase;margin-bottom:16px;}
     .go-sub{font-size:1rem;color:#2ecc71;margin-bottom:8px;}
     .go-detail{font-size:.8rem;color:#666;margin-bottom:28px;line-height:1.8;}
-
+ 
     /* ── Bottom bar ── */
     #btm-bar{position:fixed;bottom:0;left:0;right:0;padding:5px 24px;background:rgba(10,10,20,.8);border-top:1px solid rgba(255,255,255,.04);display:flex;gap:24px;font-size:.66rem;color:#444;z-index:50;}
     #btm-bar span strong{color:#777;}
-
+ 
     /* Waiting indicator */
     .waiting-dot{display:inline-block;animation:pulse 1.4s ease-in-out infinite;}
     @keyframes pulse{0%,100%{opacity:1}50%{opacity:.2}}
   </style>
 </head>
 <body>
-
+ 
 <!-- ══ LANDING ══ -->
 <div id="landing-screen" class="screen active">
   <div class="card-panel">
     <h1>Sweats</h1>
     <p>A card game of nerves and rising stakes</p>
-
+ 
     <div>
       <label>Your Name</label>
       <input id="inp-name" type="text" placeholder="Enter your name" maxlength="14"/>
     </div>
-
+ 
     <button class="btn btn-gold" onclick="createRoom()">Create a Game</button>
-
+ 
     <div class="divider">or join with a code</div>
-
+ 
     <div>
       <label>Room Code</label>
       <input id="inp-code" type="text" placeholder="e.g. AB3XY" maxlength="5" style="text-transform:uppercase;letter-spacing:4px;"/>
     </div>
-
+ 
     <button class="btn btn-dark" onclick="joinRoom()">Join Game</button>
-
+ 
     <div id="land-err" class="err-msg"></div>
   </div>
 </div>
-
+ 
 <!-- ══ LOBBY ══ -->
 <div id="lobby-screen" class="screen">
   <div class="lobby-box">
     <h2>Waiting Room</h2>
-
+ 
     <div class="room-code-display">
       <div class="code-label">Share this code with friends</div>
       <div class="code" id="lobby-code">—</div>
     </div>
-
+ 
     <div>
       <label style="margin-bottom:8px;display:block;">Players</label>
       <div class="player-list" id="lobby-players"></div>
     </div>
-
+ 
     <div>
       <label>Ante per player (first hand)</label>
       <select id="inp-ante">
@@ -207,13 +236,13 @@
         <option value="10">$10</option>
       </select>
     </div>
-
+ 
     <button class="btn btn-gold" id="start-btn" onclick="startGame()" style="display:none;">Start Game</button>
     <div class="waiting-msg" id="lobby-waiting">Waiting for host to start…</div>
     <div id="lobby-err" class="err-msg"></div>
   </div>
 </div>
-
+ 
 <!-- ══ GAME ══ -->
 <div id="game-screen" class="screen">
   <!-- Header -->
@@ -225,7 +254,7 @@
       <span>Room <strong id="h-code">—</strong></span>
     </div>
   </div>
-
+ 
   <!-- Table -->
   <div class="table-wrap">
     <div class="felt"></div>
@@ -237,13 +266,13 @@
     <div id="seats"></div>
   </div>
 </div>
-
+ 
 <!-- Log panel -->
 <div id="log-panel" style="display:none;">
   <div class="log-title">Game Log</div>
   <div id="log-list"></div>
 </div>
-
+ 
 <!-- Action bar -->
 <div id="action-bar" class="hidden">
   <div class="action-btns">
@@ -252,7 +281,7 @@
   </div>
   <div class="fold-warn" id="fold-warn"></div>
 </div>
-
+ 
 <!-- Round over -->
 <div id="round-overlay">
   <div class="round-box">
@@ -263,7 +292,7 @@
     <button class="btn btn-gold" style="max-width:220px;margin:0 auto;" onclick="sendNextHand()">Next Hand ›</button>
   </div>
 </div>
-
+ 
 <!-- Game over -->
 <div id="gameover-overlay">
   <div class="go-box">
@@ -273,14 +302,14 @@
     <button class="btn btn-dark" style="max-width:220px;margin:0 auto;" onclick="location.reload()">Play Again</button>
   </div>
 </div>
-
+ 
 <!-- Bottom bar -->
 <div id="btm-bar" style="display:none;">
   <span>In game: <strong id="bb-in">—</strong></span>
   <span>In hand: <strong id="bb-hand">—</strong></span>
   <span>Room: <strong id="bb-room">—</strong></span>
 </div>
-
+ 
 <script>
 // ═══════════════════════════════════════════════
 // CONNECTION
@@ -289,7 +318,7 @@ const socket = io();
 let myRoomCode = null;
 let myIdx      = null;
 let lastState  = null;
-
+ 
 // Seat display positions — index = display position, value = CSS class
 // Position 0 is always YOU (bottom). Others spread around.
 const DISPLAY_SEATS = {
@@ -299,9 +328,9 @@ const DISPLAY_SEATS = {
   5: ['seat-0','seat-4','seat-2','seat-3','seat-5'],
   6: ['seat-0','seat-4','seat-2','seat-1','seat-3','seat-5'],
 };
-
+ 
 const RED = new Set(['♥','♦']);
-
+ 
 // ═══════════════════════════════════════════════
 // SCREEN MANAGEMENT
 // ═══════════════════════════════════════════════
@@ -312,7 +341,7 @@ function show(id) {
   document.getElementById('log-panel').style.display  = inGame ? 'flex' : 'none';
   document.getElementById('btm-bar').style.display    = inGame ? 'flex' : 'none';
 }
-
+ 
 // ═══════════════════════════════════════════════
 // LANDING ACTIONS
 // ═══════════════════════════════════════════════
@@ -322,7 +351,7 @@ function createRoom() {
   const ante = parseInt(document.getElementById('inp-ante')?.value) || 2;
   socket.emit('create_room', { name, ante });
 }
-
+ 
 function joinRoom() {
   const name = document.getElementById('inp-name').value.trim();
   const code = document.getElementById('inp-code').value.trim().toUpperCase();
@@ -330,21 +359,21 @@ function joinRoom() {
   if (!code) { document.getElementById('land-err').textContent = 'Enter a room code.'; return; }
   socket.emit('join_room', { name, code });
 }
-
+ 
 function startGame() {
   socket.emit('start_game');
 }
-
+ 
 function sendAction(action) {
   socket.emit('action', { action });
   document.getElementById('action-bar').classList.add('hidden');
 }
-
+ 
 function sendNextHand() {
   socket.emit('next_hand');
   document.getElementById('round-overlay').classList.remove('show');
 }
-
+ 
 // ═══════════════════════════════════════════════
 // SOCKET EVENTS
 // ═══════════════════════════════════════════════
@@ -355,16 +384,16 @@ socket.on('room_ready', ({ code }) => {
   document.getElementById('bb-room').textContent    = code;
   show('lobby-screen');
 });
-
+ 
 socket.on('err', msg => {
   document.getElementById('land-err').textContent  = msg;
   document.getElementById('lobby-err').textContent = msg;
 });
-
+ 
 socket.on('state', state => {
   lastState = state;
   myIdx = state.myIdx;
-
+ 
   if (state.phase === 'lobby') {
     renderLobby(state);
   } else {
@@ -372,7 +401,7 @@ socket.on('state', state => {
     renderGame(state);
   }
 });
-
+ 
 // ═══════════════════════════════════════════════
 // LOBBY RENDER
 // ═══════════════════════════════════════════════
@@ -391,12 +420,12 @@ function renderLobby(state) {
     `;
     list.appendChild(row);
   });
-
+ 
   const iAmHost = state.players[state.myIdx]?.isHost;
   document.getElementById('start-btn').style.display  = iAmHost ? 'block' : 'none';
   document.getElementById('lobby-waiting').style.display = iAmHost ? 'none' : 'block';
 }
-
+ 
 // ═══════════════════════════════════════════════
 // GAME RENDER
 // ═══════════════════════════════════════════════
@@ -405,7 +434,7 @@ function renderGame(state) {
   document.getElementById('h-round').textContent = state.round;
   document.getElementById('h-pot').textContent   = '$' + state.pot;
   document.getElementById('pot-amt').textContent = '$' + state.pot;
-
+ 
   const phaseNames = {
     first_turn:  'First Player Acts',
     other_turns: 'Fold or Play',
@@ -414,13 +443,13 @@ function renderGame(state) {
     game_over:   'Game Over',
   };
   document.getElementById('phase-lbl').textContent = phaseNames[state.phase] || '';
-
+ 
   // Bottom bar
   const inGame = state.players.filter(p => p.status !== 'out').length;
   const inHand = state.players.filter(p => p.status === 'active' || p.status === 'played').length;
   document.getElementById('bb-in').textContent   = inGame;
   document.getElementById('bb-hand').textContent = inHand;
-
+ 
   // Log
   const logList = document.getElementById('log-list');
   logList.innerHTML = '';
@@ -430,7 +459,7 @@ function renderGame(state) {
     el.textContent = msg;
     logList.appendChild(el);
   });
-
+ 
   // Seats — rotate so YOU are always at the bottom (index 0)
   const n = state.players.length;
   const rotated = [];
@@ -438,14 +467,14 @@ function renderGame(state) {
     rotated.push({ player: state.players[(state.myIdx + i) % n], origIdx: (state.myIdx + i) % n });
   }
   const seatClasses = DISPLAY_SEATS[n] || DISPLAY_SEATS[6];
-
+ 
   const seatsEl = document.getElementById('seats');
   seatsEl.innerHTML = '';
   rotated.forEach(({ player, origIdx }, dispIdx) => {
     const seatClass = seatClasses[dispIdx] || 'seat-0';
     seatsEl.appendChild(buildSeat(player, origIdx, state, seatClass));
   });
-
+ 
   // Action bar
   const myTurn = state.isMyTurn;
   document.getElementById('action-bar').classList.toggle('hidden', !myTurn);
@@ -453,79 +482,79 @@ function renderGame(state) {
     document.getElementById('fold-warn').textContent =
       state.isFirstPlayer ? '⚠ Folding eliminates you from the game!' : '';
   }
-
+ 
   // Round over overlay
   if (state.phase === 'round_over') {
     showRoundOver(state);
   } else {
     document.getElementById('round-overlay').classList.remove('show');
   }
-
+ 
   // Game over overlay
   if (state.phase === 'game_over') {
     showGameOver(state);
   }
 }
-
+ 
 function logClass(msg) {
   if (msg.includes('—'))           return 'lg-gold';
   if (msg.includes('wins') || msg.includes('split')) return 'lg-green';
   if (msg.includes('fold') || msg.includes('eliminated')) return 'lg-red';
   return '';
 }
-
+ 
 // ═══════════════════════════════════════════════
 // BUILD SEAT
 // ═══════════════════════════════════════════════
 function buildSeat(p, origIdx, state, seatClass) {
   const seat = document.createElement('div');
   seat.className = 'seat ' + seatClass;
-
+ 
   const isActive  = origIdx === state.curIdx && (state.phase === 'first_turn' || state.phase === 'other_turns');
   const isWinner  = state.winnerIdxs.includes(origIdx) && (state.phase === 'showdown' || state.phase === 'round_over');
-
+ 
   if (isActive)               seat.classList.add('is-active');
   if (p.status === 'out')     seat.classList.add('is-out');
   if (p.status === 'folded_hand') seat.classList.add('is-folded');
   if (isWinner)               seat.classList.add('is-winner');
-
+ 
   // Cards
   const hand = document.createElement('div');
   hand.className = 'cards-hand';
   p.cards.forEach(c => hand.appendChild(buildCard(c, isWinner)));
   seat.appendChild(hand);
-
+ 
   // Info
   const info = document.createElement('div');
   info.className = 'p-info';
-
+ 
   if (p.isMe)   addBadge(info, 'b-you',  'You');
   if (p.isHost) addBadge(info, 'b-host', 'Host');
   if (p.isFirst && (state.phase === 'first_turn' || state.phase === 'other_turns'))
     addBadge(info, 'b-first', 'First');
-
+ 
   const name = document.createElement('div');
   name.className = 'p-name-tag';
   name.textContent = p.name;
   info.appendChild(name);
-
+ 
   const money = document.createElement('div');
   money.className = 'p-money';
   money.textContent = '$' + p.money;
   info.appendChild(money);
-
+ 
   const statusBadges = {
     out:         ['b-out',    'Eliminated'],
     folded_hand: ['b-folded', 'Folded'],
     played:      ['b-played', 'Played'],
   };
   if (statusBadges[p.status]) addBadge(info, ...statusBadges[p.status]);
-
+ 
   if (p.handResult && (state.phase === 'showdown' || state.phase === 'round_over'))
     addBadge(info, 'b-hand', p.handResult.name);
-
+ 
   if (isWinner) addBadge(info, 'b-winner', '🏆 Winner');
-
+ 
   if (isActive && p.isMe) {
     const yt = document.createElement('div');
     yt.className = 'your-turn-tag';
@@ -538,18 +567,18 @@ function buildSeat(p, origIdx, state, seatClass) {
     wt.textContent = `Waiting for ${p.name}…`;
     info.appendChild(wt);
   }
-
+ 
   seat.appendChild(info);
   return seat;
 }
-
+ 
 function addBadge(parent, cls, txt) {
   const b = document.createElement('div');
   b.className = 'badge ' + cls;
   b.textContent = txt;
   parent.appendChild(b);
 }
-
+ 
 // ═══════════════════════════════════════════════
 // BUILD CARD
 // ═══════════════════════════════════════════════
@@ -559,24 +588,24 @@ function buildCard(c, isWinner) {
     d.className = 'card card-back';
     return d;
   }
-
+ 
   const isRed = RED.has(c.suit);
   const div = document.createElement('div');
   div.className = 'card card-face ' + (isRed ? 'red' : 'black');
   if (c.faceUp)  div.classList.add('card-is-faceup');
   if (isWinner)  div.classList.add('card-winner');
-
+ 
   const rank = document.createElement('span');
   rank.className = 'c-rank';
   rank.textContent = c.rank;
-
+ 
   const suit = document.createElement('span');
   suit.className = 'c-suit';
   suit.textContent = c.suit;
-
+ 
   div.appendChild(rank);
   div.appendChild(suit);
-
+ 
   if (c.faceUp) {
     const wrap = document.createElement('div');
     wrap.className = 'faceup-wrap';
@@ -587,24 +616,24 @@ function buildCard(c, isWinner) {
     wrap.appendChild(lbl);
     return wrap;
   }
-
+ 
   return div;
 }
-
+ 
 // ═══════════════════════════════════════════════
 // OVERLAYS
 // ═══════════════════════════════════════════════
 function showRoundOver(state) {
   const winnerIdxs = state.winnerIdxs;
   if (!winnerIdxs || winnerIdxs.length === 0) return;
-
+ 
   const winners  = winnerIdxs.map(i => state.players[i]);
   const losers   = state.players.filter((p, i) =>
     state.playedIdxs?.includes(i) && !winnerIdxs.includes(i)
   );
   const potTaken = state.prevPot || state.pot;
   const nextPot  = losers.length * potTaken;
-
+ 
   if (winners.length > 1) {
     const share = Math.floor(potTaken / winners.length);
     document.getElementById('ro-title').textContent = 'Tie!';
@@ -622,10 +651,10 @@ function showRoundOver(state) {
       `Takes pot of <strong>$${potTaken}</strong>.<br>
        ${losers.length} loser(s) each ante <strong>$${potTaken}</strong> → next pot <strong>$${nextPot}</strong>.`;
   }
-
+ 
   document.getElementById('round-overlay').classList.add('show');
 }
-
+ 
 function showGameOver(state) {
   const w = state.gameWinnerIdx >= 0 ? state.players[state.gameWinnerIdx] : null;
   document.getElementById('go-winner').textContent =
@@ -634,7 +663,7 @@ function showGameOver(state) {
     w ? `Played their nerve perfectly while everyone else folded.<br>Final pot: <strong>$${state.pot}</strong>` : '';
   document.getElementById('gameover-overlay').classList.add('show');
 }
-
+ 
 // Allow Enter key on inputs
 document.getElementById('inp-code').addEventListener('keydown', e => {
   if (e.key === 'Enter') joinRoom();
