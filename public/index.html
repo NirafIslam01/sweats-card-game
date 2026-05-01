@@ -110,43 +110,37 @@
     .your-turn-tag{font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:#f0c040;animation:blink 1.1s ease-in-out infinite;}
     @keyframes blink{0%,100%{opacity:1}50%{opacity:.15}}
  
-    /* ── Action bar ── */
-    #action-bar{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;z-index:200;}
-    #action-bar.hidden{display:none;}
-    .action-btns{display:flex;gap:14px;}
-    .act-btn{padding:12px 38px;border:none;border-radius:6px;font-size:.85rem;font-weight:bold;letter-spacing:2px;text-transform:uppercase;cursor:pointer;font-family:Georgia,serif;transition:transform .1s,box-shadow .1s;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
-    .act-btn:hover{transform:translateY(-2px);}
-    .btn-fold{background:#252525;color:#888;border:1px solid #3a3a3a;}
-    .btn-play{background:linear-gradient(135deg,#f0c040,#e0a020);color:#1a1a2e;box-shadow:0 4px 16px rgba(240,192,64,.35);}
-    .fold-warn{font-size:.62rem;color:#e74c3c;letter-spacing:1px;text-align:center;}
+    /* ── Inline action buttons (attached to your seat) ── */
+    .inline-actions{display:flex;gap:10px;margin-top:6px;}
+    .act-btn{padding:11px 28px;border:none;border-radius:8px;font-size:.82rem;font-weight:bold;letter-spacing:2px;text-transform:uppercase;cursor:pointer;font-family:Georgia,serif;transition:transform .1s,box-shadow .1s;-webkit-tap-highlight-color:transparent;touch-action:manipulation;min-width:90px;}
+    .act-btn:active{transform:scale(.96);}
+    .btn-fold{background:#252525;color:#aaa;border:1px solid #3a3a3a;}
+    .btn-play{background:linear-gradient(135deg,#f0c040,#e0a020);color:#1a1a2e;box-shadow:0 4px 16px rgba(240,192,64,.4);}
+    .fold-warn{font-size:.58rem;color:#e74c3c;letter-spacing:1px;text-align:center;margin-top:2px;}
  
     /* ── Mobile responsive ── */
     @media (max-width: 860px) {
-      .table-wrap{
-        transform-origin: top center;
-        transform: scale(0.75);
-        margin-top: 10px;
-      }
+      .table-wrap{ transform-origin: top center; transform: scale(0.72); margin-top: -20px; }
       #game-screen{ justify-content: flex-start; padding-top: 56px; }
       #log-panel{ display: none !important; }
       #btm-bar{ display: none !important; }
+      /* Bigger buttons on tablet */
+      .act-btn{ padding: 14px 32px; font-size: .9rem; }
     }
     @media (max-width: 620px) {
-      .table-wrap{ transform: scale(0.5); margin-top: -60px; }
-      /* Big tap-friendly action buttons on mobile */
-      #action-bar{ bottom: 16px; width: 92%; left: 4%; transform: none; }
-      .action-btns{ width: 100%; gap: 10px; }
-      .act-btn{ flex: 1; padding: 18px 10px; font-size: 1rem; letter-spacing: 1px; border-radius: 10px; }
-      .fold-warn{ font-size: .7rem; }
-      /* Landing & lobby fit phone */
+      .table-wrap{ transform: scale(0.48); margin-top: -100px; }
+      /* Larger buttons scaled up to compensate for table scale */
+      .inline-actions{ gap: 14px; margin-top: 10px; }
+      .act-btn{ padding: 20px 36px; font-size: 1.1rem; letter-spacing: 1px; min-width: 110px; border-radius: 10px; }
+      /* Landing & lobby */
       .card-panel{ width: 92vw; padding: 28px 22px; }
       .lobby-box{ width: 92vw; padding: 24px 20px; }
-      /* Round-over overlay fits phone */
       .round-box{ padding: 28px 20px; }
       .round-box h2{ font-size: 1.2rem; }
     }
     @media (max-width: 400px) {
-      .table-wrap{ transform: scale(0.42); margin-top: -80px; }
+      .table-wrap{ transform: scale(0.4); margin-top: -120px; }
+      .act-btn{ padding: 22px 32px; font-size: 1.1rem; }
     }
  
     /* ── Game log ── */
@@ -273,14 +267,7 @@
   <div id="log-list"></div>
 </div>
  
-<!-- Action bar -->
-<div id="action-bar" class="hidden">
-  <div class="action-btns">
-    <button class="act-btn btn-fold" onclick="sendAction('fold')">Fold</button>
-    <button class="act-btn btn-play" onclick="sendAction('play')">Play</button>
-  </div>
-  <div class="fold-warn" id="fold-warn"></div>
-</div>
+<!-- Action buttons are rendered inline inside your seat -->
  
 <!-- Round over -->
 <div id="round-overlay">
@@ -366,7 +353,6 @@ function startGame() {
  
 function sendAction(action) {
   socket.emit('action', { action });
-  document.getElementById('action-bar').classList.add('hidden');
 }
  
 function sendNextHand() {
@@ -475,13 +461,7 @@ function renderGame(state) {
     seatsEl.appendChild(buildSeat(player, origIdx, state, seatClass));
   });
  
-  // Action bar
-  const myTurn = state.isMyTurn;
-  document.getElementById('action-bar').classList.toggle('hidden', !myTurn);
-  if (myTurn) {
-    document.getElementById('fold-warn').textContent =
-      state.isFirstPlayer ? '⚠ Folding eliminates you from the game!' : '';
-  }
+  // Action buttons are rendered inline in buildSeat
  
   // Round over overlay
   if (state.phase === 'round_over') {
@@ -560,6 +540,31 @@ function buildSeat(p, origIdx, state, seatClass) {
     yt.className = 'your-turn-tag';
     yt.textContent = '▲ Your Turn';
     info.appendChild(yt);
+ 
+    // Inline fold / play buttons — always near your cards
+    const actions = document.createElement('div');
+    actions.className = 'inline-actions';
+ 
+    const foldBtn = document.createElement('button');
+    foldBtn.className = 'act-btn btn-fold';
+    foldBtn.textContent = 'Fold';
+    foldBtn.onclick = () => sendAction('fold');
+ 
+    const playBtn = document.createElement('button');
+    playBtn.className = 'act-btn btn-play';
+    playBtn.textContent = 'Play';
+    playBtn.onclick = () => sendAction('play');
+ 
+    actions.appendChild(foldBtn);
+    actions.appendChild(playBtn);
+    info.appendChild(actions);
+ 
+    if (state.isFirstPlayer) {
+      const warn = document.createElement('div');
+      warn.className = 'fold-warn';
+      warn.textContent = '⚠ Folding eliminates you from the game!';
+      info.appendChild(warn);
+    }
   } else if (isActive && !p.isMe) {
     const wt = document.createElement('div');
     wt.className = 'your-turn-tag';
@@ -677,3 +682,4 @@ document.getElementById('inp-name').addEventListener('keydown', e => {
 </script>
 </body>
 </html>
+ 
