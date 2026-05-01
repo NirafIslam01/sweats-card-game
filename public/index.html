@@ -120,27 +120,29 @@
  
     /* ── Mobile responsive ── */
     @media (max-width: 860px) {
-      .table-wrap{ transform-origin: top center; transform: scale(0.72); margin-top: -20px; }
-      #game-screen{ justify-content: flex-start; padding-top: 56px; }
-      #log-panel{ display: none !important; }
-      #btm-bar{ display: none !important; }
-      /* Bigger buttons on tablet */
-      .act-btn{ padding: 14px 32px; font-size: .9rem; }
+      body { overflow-x: hidden; }
+      .screen { height: auto !important; min-height: 100vh; }
+      #game-screen { justify-content: flex-start; padding-top: 66px; }
+      .table-wrap { transform-origin: top center; transform: scale(0.72); margin-top: 0; }
+      #log-panel { display: none !important; }
+      #btm-bar { display: none !important; }
+      .act-btn { padding: 14px 32px; font-size: .9rem; }
     }
     @media (max-width: 620px) {
-      .table-wrap{ transform: scale(0.48); margin-top: -100px; }
-      /* Larger buttons scaled up to compensate for table scale */
-      .inline-actions{ gap: 14px; margin-top: 10px; }
-      .act-btn{ padding: 20px 36px; font-size: 1.1rem; letter-spacing: 1px; min-width: 110px; border-radius: 10px; }
-      /* Landing & lobby */
-      .card-panel{ width: 92vw; padding: 28px 22px; }
-      .lobby-box{ width: 92vw; padding: 24px 20px; }
-      .round-box{ padding: 28px 20px; }
-      .round-box h2{ font-size: 1.2rem; }
+      body { overflow-y: auto; }
+      #game-screen { overflow: visible; }
+      /* Scale table to fit phone width; collapse empty layout space below via negative margin */
+      .table-wrap { transform: scale(0.44); transform-origin: top center; margin-top: 10px; margin-bottom: -230px; }
+      .inline-actions { gap: 14px; margin-top: 14px; }
+      .act-btn { padding: 20px 36px; font-size: 1.1rem; letter-spacing: 1px; min-width: 110px; border-radius: 10px; }
+      .card-panel { width: 92vw; padding: 28px 22px; }
+      .lobby-box { width: 92vw; padding: 24px 20px; }
+      .round-box { padding: 28px 20px; }
+      .round-box h2 { font-size: 1.2rem; }
     }
     @media (max-width: 400px) {
-      .table-wrap{ transform: scale(0.4); margin-top: -120px; }
-      .act-btn{ padding: 22px 32px; font-size: 1.1rem; }
+      .table-wrap { transform: scale(0.36); margin-bottom: -280px; }
+      .act-btn { padding: 22px 32px; font-size: 1.1rem; }
     }
  
     /* ── Game log ── */
@@ -682,4 +684,3 @@ document.getElementById('inp-name').addEventListener('keydown', e => {
 </script>
 </body>
 </html>
- 
