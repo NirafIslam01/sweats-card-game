@@ -17,8 +17,8 @@ const SUITS = ['♣','♦','♥','♠'];
 const RVAL  = {2:2,3:3,4:4,5:5,6:6,7:7,8:8,9:9,10:10,J:11,Q:12,K:13,A:14};
 const SVAL  = {'♣':1,'♦':2,'♥':3,'♠':4};
 
-// Clockwise seat order (left around the table from bottom)
-const CLOCKWISE = [0,4,2,1,3,5];
+// Visual clockwise seat order is now handled by DISPLAY_SEATS on the client.
+// Turn queue uses simple player-array order starting from the first player.
 
 // Bot player names pool
 const BOT_NAMES = ['Ace','Lucky','Bluff','Hawk','Duke','Stone','Rio','Sly'];
@@ -143,13 +143,14 @@ function scheduleBotTurn(roomCode) {
 // TURN QUEUE (clockwise from first player)
 // ═══════════════════════════════════════════════
 function buildTurnQueue(game, firstIdx) {
-  const firstSeat = game.players[firstIdx].seat;
-  const startPos  = CLOCKWISE.indexOf(firstSeat);
-  const queue     = [firstIdx];
-  for (let i = 1; i < CLOCKWISE.length; i++) {
-    const seatNum = CLOCKWISE[(startPos + i) % CLOCKWISE.length];
-    const match   = game.players.find(p => p.seat === seatNum && p.status === 'active');
-    if (match) queue.push(game.players.indexOf(match));
+  // Collect active players in their array order (join/seat order).
+  // The client's DISPLAY_SEATS places the next player in the array to the
+  // RIGHT of each player, so array order = visual clockwise.
+  const actives  = game.players.map((p, i) => ({ p, i })).filter(({ p }) => p.status === 'active');
+  const firstPos = actives.findIndex(({ i }) => i === firstIdx);
+  const queue    = [];
+  for (let j = 0; j < actives.length; j++) {
+    queue.push(actives[(firstPos + j) % actives.length].i);
   }
   return queue;
 }
